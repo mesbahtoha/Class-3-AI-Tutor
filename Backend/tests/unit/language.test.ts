@@ -31,9 +31,15 @@ describe("language utils (spec §7.1)", () => {
   it("follow-up stays banglish-aware", () => {
     expect(detectLanguage("amar answer vul holo keno?")).toBe("banglish");
   });
-  it("resolves response language from preference/auto", () => {
+  it("resolves response language from preference/auto (Bangla-script default)", () => {
     expect(resolveResponseLanguage("en", "bn")).toBe("en");
-    expect(resolveResponseLanguage("auto", "banglish")).toBe("banglish");
+    expect(resolveResponseLanguage("banglish", "bn")).toBe("banglish"); // explicit choice wins
     expect(resolveResponseLanguage("auto", "mixed")).toBe("bn");
+    expect(resolveResponseLanguage("auto", "en")).toBe("en");
+  });
+  it("answers Banglish questions in Bangla script on auto", () => {
+    expect(resolveResponseLanguage("auto", "banglish")).toBe("bn");
+    expect(resolveResponseLanguage(undefined, "banglish")).toBe("bn");
+    expect(resolveResponseLanguage(undefined, "unknown")).toBe("bn");
   });
 });

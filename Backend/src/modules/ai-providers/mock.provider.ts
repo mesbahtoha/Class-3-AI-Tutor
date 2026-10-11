@@ -17,10 +17,10 @@ export class MockLLMProvider implements LLMProvider {
     const lastUser = [...messages].reverse().find((m) => m.role === "user");
     const q = (lastUser?.content ?? "").slice(0, 400);
     const text =
-      `Cholo, shohoj kore bujhi! 🌱\n\n` +
-      `Tomar proshno: "${q || "ajker pora"}"\n\n` +
-      `Step 1: Prothome amra mul kotha ta chinte shikhbo.\n` +
-      `Step 2: Tarpor boi-er udahoron diye practice korbo.\n\n` +
+      `চলো, সহজ করে বুঝি! 🌱\n\n` +
+      `তোমার প্রশ্ন: "${q || "আজকের পড়া"}"\n\n` +
+      `ধাপ ১: প্রথমে আমরা মূল কথাটা চিনতে শিখবো।\n` +
+      `ধাপ ২: তারপর বইয়ের উদাহরণ দিয়ে অনুশীলন করবো।\n\n` +
       `(Mock answer — configure OPENROUTER_API_KEY / ANTHROPIC_API_KEY for real AI.)`;
     return {
       text,

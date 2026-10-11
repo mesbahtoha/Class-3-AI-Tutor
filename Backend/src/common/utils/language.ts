@@ -57,7 +57,12 @@ export function queryVariants(original: string): string[] {
   return [...new Set(variants)].filter(Boolean).slice(0, 3);
 }
 
-/** Map requested languagePreference to response language bucket. */
+/**
+ * Map requested languagePreference to response language bucket.
+ * Policy: explicit preference always wins; otherwise Bangla script ("bn") is
+ * the default for young BD learners — including when the question itself is
+ * Banglish/mixed. English questions still get English answers on auto.
+ */
 export function resolveResponseLanguage(
   preference: string | undefined,
   detected: DetectedLanguage,
@@ -65,7 +70,7 @@ export function resolveResponseLanguage(
 ): "bn" | "en" | "banglish" {
   if (preference === "bn" || preference === "en" || preference === "banglish") return preference;
   if (detected === "bn" || detected === "mixed") return "bn";
-  if (detected === "banglish") return "banglish";
+  if (detected === "banglish") return "bn"; // Banglish in → Bangla script out
   if (detected === "en") return "en";
   if (retrievedSample && BANGLA_RE.test(retrievedSample)) return "bn";
   return "bn"; // default: young BD learners → Bangla-first
