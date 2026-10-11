@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * Playful Geometric — design tokens as CSS variables.
+ * Light = warm cream paper; Dark = deep slate playroom. Both keep the
+ * accent confetti + hard "pop" shadows (softer ink in dark mode).
+ */
+:root {
+  --bg: 255 253 245;        /* #FFFDF5 warm cream */
+  --fg: 30 41 59;           /* #1E293B slate 800 */
+  --muted: 241 245 249;      /* slate 100 */
+  --muted-fg: 100 116 139;   /* slate 500 */
+  --accent: 139 92 246;      /* vivid violet */
+  --accent-fg: 255 255 255;
+  --secondary: 244 114 182;   /* hot pink */
+  --tertiary: 251 191 36;     /* amber */
+  --quaternary: 52 211 153;   /* emerald */
+  --card: 255 255 255;
+  --line: 226 232 240;        /* slate 200 */
+  --ink: 30 41 59;            /* hard-shadow ink */
+  --ring: 139 92 246;
+  --pop-soft: 226 232 240;
+}
+
+.dark {
+  --bg: 15 23 42;            /* slate 900 */
+  --fg: 241 245 249;         /* slate 100 */
+  --muted: 30 41 59;         /* slate 800 */
+  --muted-fg: 148 163 184;   /* slate 400 */
+  --accent: 167 139 250;     /* violet 400 (lifts on dark) */
+  --accent-fg: 15 23 42;
+  --secondary: 244 114 182;
+  --tertiary: 251 191 36;
+  --quaternary: 52 211 153;
+  --card: 30 41 59;
+  --line: 51 65 85;          /* slate 700 */
+  --ink: 2 6 23;             /* near-black pop ink */
+  --ring: 167 139 250;
+  --pop-soft: 51 65 85;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  @apply bg-background text-foreground font-body antialiased;
+  line-height: 1.7; /* roomy for Bangla vowel marks + long explanations */
+}
+
+/* Bangla-first text: generous line box, safe wrapping for mixed script */
+.bn {
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+
+h1, h2, h3, .font-display {
+  font-family: "Outfit", "Noto Sans Bengali", system-ui, sans-serif;
+}
+
+/* Candy button press physics */
+.btn-pop {
+  transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 300ms cubic-bezier(0.34, 1.56, 0.64, 1), background-color 200ms;
+}
+.btn-pop:hover { transform: translate(-2px, -2px); }
+.btn-pop:active { transform: translate(2px, 2px); }
+
+/* Sticker card wiggle */
+.card-wiggle { transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1); }
+.card-wiggle:hover { transform: rotate(-1deg) scale(1.02); }
+
+/* Dot-grid + stripe textures */
+.dot-grid {
+  background-image: radial-gradient(rgb(var(--muted-fg) / 0.35) 1.5px, transparent 1.5px);
+  background-size: 18px 18px;
+}
+.stripes {
+  background-image: repeating-linear-gradient(-45deg, rgb(var(--tertiary) / 0.25) 0 10px, transparent 10px 20px);
+}
+
+/* Marquee (keywords ribbon) */
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.animate-marquee { animation: marquee 22s linear infinite; }
+
+/* Pop-in entrance */
+@keyframes pop-in { 0% { transform: scale(0.6); opacity: 0; } 70% { transform: scale(1.04); } 100% { transform: scale(1); opacity: 1; } }
+.animate-pop-in { animation: pop-in 450ms cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+/* Wiggle for icons */
+@keyframes wiggle { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(3deg); } 75% { transform: rotate(-3deg); } }
+.group:hover .wiggle { animation: wiggle 400ms ease-in-out; }
+
+/* Typing dots */
+@keyframes bounce-dot { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-6px); } }
+.typing-dot { animation: bounce-dot 1.1s infinite; }
+.typing-dot:nth-child(2) { animation-delay: 0.15s; }
+.typing-dot:nth-child(3) { animation-delay: 0.3s; }
+
+/* Visible focus everywhere (AAA-ish, thick + shadow) */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid rgb(var(--ring));
+  outline-offset: 2px;
+  box-shadow: 4px 4px 0px 0px rgb(var(--ring));
+}
+
+/* Respect reduced motion: kill bounce/wiggle/marquee/pop */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee, .animate-pop-in, .typing-dot, .card-wiggle, .btn-pop, .group:hover .wiggle {
+    animation: none !important;
+    transition: none !important;
+  }
+  .card-wiggle:hover { transform: none; }
+  .btn-pop:hover, .btn-pop:active { transform: none; }
+}

@@ -1,0 +1,14 @@
+node_modules/
+.next/
+out/
+dist/
+tsconfig.tsbuildinfo
+.env
+.env*.local
+coverage/
+
+# Firebase / misc local
+.firebase/
+*.log
+.DS_Store
+Thumbs.db
