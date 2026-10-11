@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+dist/
+
+# Env — NEVER commit real secrets
+.env
+.env.local
+.env.*.local
+
+# Prisma
+prisma/*.db
+prisma/*.db-journal
+
+# Uploads / local storage (dev only)
+storage/
+uploads/
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.mp3
+*.wav
+*.webm
+
+# Firebase service account — NEVER commit
+*-firebase-adminsdk-*.json
+serviceAccountKey.json
+service-account*.json
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Test / coverage
+coverage/
+.nyc_output/
+
+# Temp
+tmp/
+temp/
